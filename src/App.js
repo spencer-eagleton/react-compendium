@@ -6,21 +6,26 @@ import { getPokemon } from './services/pokemon';
 function App() {
   const [pokemon, setPokemon] = useState([]);
   const [query, setQuery] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getPokemon();
+      const data = await getPokemon(query);
       setPokemon(data.results);
+      setLoading(false);
     };
-    fetchData();
-  }, []);
+    if (loading) {
+      fetchData();
+    }
+  }, [loading, query]);
 
   return (
     <div className="App">
       <>
         <h1>PokeDex!</h1>
-        <Controls query={query} setQuery={setQuery} />
-        <Pokelist pokemon={pokemon} />
+        <Controls query={query} setQuery={setQuery} setLoading={setLoading} />
+        {loading && <span>loading...</span>}
+        {!loading && <Pokelist pokemon={pokemon} loading={loading} setLoading={setLoading} />}
       </>
     </div>
   );

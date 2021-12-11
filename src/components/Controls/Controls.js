@@ -1,4 +1,5 @@
 import './Controls.css';
+import Button from '@mui/material/Button';
 export default function Controls({
   query,
   setQuery,
@@ -24,7 +25,7 @@ export default function Controls({
         </select>
 
         <select value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
-          <option value="all">All Types</option>
+          <option value="all">all Types</option>
           {types.map((type) => (
             <option key={type} value={type}>
               {type}
@@ -32,7 +33,9 @@ export default function Controls({
           ))}
         </select>
       </div>
-      <button onClick={() => setLoading(true)}>Search</button>
+      <Button variant="text" onClick={() => setLoading(true)}>
+        Search
+      </Button>
     </div>
   );
 }
